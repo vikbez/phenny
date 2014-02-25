@@ -30,22 +30,30 @@ def create_default_config(fn):
    channels = ['#example', '#test']
    owner = 'yournickname'
 
-   # password is the NickServ password, serverpass is the server password
-   # password = 'example'
-   # serverpass = 'serverpass'
+   # NickServ password
+   #password = 'example'
+   # Server password
+   #serverpass = 'serverpass'
+   # Owner of the bot (hostmask)
+   owner = r'nickname!ident@host'
+   # you can also allow multiple owners:
+   #owner = [r'nickname!ident@host1', r'nickname!ident@host2']
+   # Admins of the bot (hostmasks)
+   admins = [r'trustedperson1!ident@host', r'trustedperson2!ident@host']
 
-   # These are people who will be able to use admin.py's functions...
-   admins = [owner, 'someoneyoutrust']
-   # But admin.py is disabled by default, as follows:
+   # Wildcards you can use in hostmasks:
+   #  *     1 or more characters
+   #  ?     1 character
+   #  \a    1 or more alpha chars
+   #  \n    1 or more numeric chars
+   #  \o    1 or more alphanumeric chars
+   #  \h    1 or more hexadecimal chars
+
+   # Modules to disable
    exclude = ['admin']
-
-   # If you want to enumerate a list of modules rather than disabling
-   # some, use "enable = ['example']", which takes precedent over exclude
-   # 
-   # enable = []
-
-   # Directories to load user modules from
-   # e.g. /path/to/my/modules
+   # Uncomment this if you want to enable modules rather than disable some
+   #enable = []
+   # Directories to load additional modules from
    extra = []
 
    # Services to load: maps channel names to white or black lists
