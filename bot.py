@@ -115,7 +115,8 @@ class Phenny(irc.Bot):
         self.commands = {'high': {}, 'medium': {}, 'low': {}}
 
         def bind(self, priority, regexp, func):
-            print priority, regexp.pattern.encode('utf-8'), func
+            print ('%s\t[%s]\t%s <function %s>' % (func.__module__, priority,
+                   regexp.pattern.encode('utf-8'), func.__name__))
             # register documentation
             if not hasattr(func, 'name'):
                 func.name = func.__name__
