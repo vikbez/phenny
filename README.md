@@ -27,6 +27,7 @@ TODO
 - simplify code
 - unify rules of modules
 - save current load-unload state of modules to config file (make config file dynamic)
+- add module.throttle (in seconds, implements usage limit per user per command)
 
 
 LINKS
