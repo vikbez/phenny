@@ -25,6 +25,9 @@ def f_load(phenny, input):
         if fn.endswith(name+'.py') and not fn.startswith('_'):
             path = fn
 
+    if not path:
+        return phenny.reply('Module %s not found.' % name)
+
     filepath = os.path.join(modpath, path)
 
     if filepath.endswith('.pyc') or filepath.endswith('.pyo'):
