@@ -59,6 +59,9 @@ def create_default_config(fn):
     # Directories to load additional modules from
     extra = []
 
+    # prefix for commands
+    prefix = '!'
+
     # Services to load: maps channel names to white or black lists
     external = {
         '#liberal': ['!'], # allow all
