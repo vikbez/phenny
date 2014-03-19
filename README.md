@@ -1,9 +1,9 @@
 WHATISTHIS
 ==========
-This is a fork of phenny irc bot.  
+This is a fork of [phenny irc bot](https://github.com/sbp/phenny).  
 The goal of this version is to be simple, extensible, with minimum modules possible.  
 This version also supports (kinds of) hot load/unload/reload.  
-Thanks to sfan5 this version also implements hostmasks for owner/admin identification.  
+Thanks to [sfan5](https://github.com/sfan5) this version also implements hostmasks for owner/admin identification.  
 
 
 USE IT
