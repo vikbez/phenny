@@ -26,6 +26,7 @@ TODO
 - clean code
 - simplify code
 - unify rules of modules
+- save current load-unload state of modules to config file (make config file dynamic)
 
 
 LINKS
