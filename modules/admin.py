@@ -21,7 +21,7 @@ def join(phenny, input):
             phenny.write(['JOIN', channel, key])
 join.rule = (['join'], r'(#\S+)(?: *(\S+))?')
 join.priority = 'low'
-join.example = '.join #example or .join #example key'
+join.example = '$!join #example (key)'
 
 
 def part(phenny, input):
@@ -33,7 +33,7 @@ def part(phenny, input):
         phenny.write(['PART'], input.group(2))
 part.commands = ['part']
 part.priority = 'low'
-part.example = '.part #example'
+part.example = '$!part #example'
 
 
 def quit(phenny, input):
@@ -46,19 +46,21 @@ def quit(phenny, input):
         __import__('os')._exit(0)
 quit.commands = ['quit']
 quit.priority = 'low'
+quit.example = '$!quit'
 
 
 def msg(phenny, input):
     # Can only be done in privmsg by an admin
     if input.sender.startswith('#'):
-        return
+        return phenny.reply(self.example)
     a, b = input.group(2), input.group(3)
     if (not a) or (not b):
-        return
+        return phenny.reply(msg.example)
     if input.admin:
         phenny.msg(a, b)
 msg.rule = (['msg'], r'(#?\S+) (.+)')
 msg.priority = 'low'
+msg.example = '$!msg nick/channel message'
 
 
 def me(phenny, input):
@@ -70,6 +72,7 @@ def me(phenny, input):
         phenny.msg(input.group(2) or input.sender, msg)
 me.rule = (['me'], r'(#?\S+) (.+)')
 me.priority = 'low'
+me.example = '$!me nick/channel message'
 
 if __name__ == '__main__':
     print __doc__.strip()

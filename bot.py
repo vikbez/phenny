@@ -123,7 +123,6 @@ class Phenny(irc.Bot):
             if func.__doc__:
                 if hasattr(func, 'example'):
                     example = func.example
-                    example = example.replace('$nickname', self.nick)
                 else:
                     example = None
                 self.doc[func.name] = (func.__doc__, example)
@@ -138,6 +137,11 @@ class Phenny(irc.Bot):
             # print name, func
             if not hasattr(func, 'priority'):
                 func.priority = 'medium'
+
+            if hasattr(func, 'example'):
+                ex = (func.example.replace('$nickname', self.nick)
+                                  .replace('$!', self.config.prefix))
+                setattr(func, 'example', ex)
 
             if not hasattr(func, 'thread'):
                 func.thread = True
