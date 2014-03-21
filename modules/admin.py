@@ -49,30 +49,33 @@ quit.priority = 'low'
 quit.example = '$!quit'
 
 
-def msg(phenny, input):
+def say(phenny, input):
     # Can only be done in privmsg by an admin
     if input.sender.startswith('#'):
-        return phenny.reply(self.example)
+        return phenny.reply(say.example)
     a, b = input.group(2), input.group(3)
     if (not a) or (not b):
-        return phenny.reply(msg.example)
+        return phenny.reply(say.example)
     if input.admin:
         phenny.msg(a, b)
-msg.rule = (['msg'], r'(#?\S+) (.+)')
-msg.priority = 'low'
-msg.example = '$!msg nick/channel message'
+say.rule = (['say'], r'(#?\S+) (.+)')
+say.priority = 'low'
+say.example = '$!say nick/channel message'
 
 
-def me(phenny, input):
+def mesay(phenny, input):
     # Can only be done in privmsg by an admin
     if input.sender.startswith('#'):
-        return
+        return phenny.reply(mesay.example)
+    a, b = input.group(2), input.group(3)
+    if (not a) or (not b):
+        return phenny.reply(mesay.example)
     if input.admin:
-        msg = '\x01ACTION %s\x01' % input.group(3)
-        phenny.msg(input.group(2) or input.sender, msg)
-me.rule = (['me'], r'(#?\S+) (.+)')
-me.priority = 'low'
-me.example = '$!me nick/channel message'
+        msg = '\x01ACTION %s\x01' % b
+        phenny.msg(a, msg)
+mesay.rule = (['mesay'], r'(#?\S+) (.+)')
+mesay.priority = 'low'
+mesay.example = '$!mesay nick/channel message'
 
 if __name__ == '__main__':
     print __doc__.strip()
