@@ -11,15 +11,16 @@ http://inamidst.com/phenny/
 def join(phenny, input):
     """Join the specified channel. This is an admin-only command."""
     # Can only be done in privmsg by an admin
-    if input.sender.startswith('#'):
+    if not input.admin or input.sender.startswith('#'):
         return
-    if input.admin:
-        channel, key = input.group(1), input.group(2)
-        if not key:
-            phenny.write(['JOIN'], channel)
-        else:
-            phenny.write(['JOIN', channel, key])
-join.rule = (['join'], r'(#\S+)(?: *(\S+))?')
+    channel, key = input.group(2), input.group(3)
+    if (not channel) or (not channel.startswith('#')):
+        return phenny.reply(join.example)
+    if not key:
+        phenny.write(['JOIN'], channel)
+    else:
+        phenny.write(['JOIN', channel, key])
+join.rule = (['join'], r'(#\S+) (.+)?')
 join.priority = 'low'
 join.example = '$!join #example (key)'
 
@@ -27,11 +28,13 @@ join.example = '$!join #example (key)'
 def part(phenny, input):
     """Part the specified channel. This is an admin-only command."""
     # Can only be done in privmsg by an admin
-    if input.sender.startswith('#'):
+    if not input.admin or input.sender.startswith('#'):
         return
-    if input.admin:
-        phenny.write(['PART'], input.group(2))
-part.commands = ['part']
+    channel = input.group(2)
+    if (not channel) or (not channel.startswith('#')):
+        return phenny.reply(part.example)
+    phenny.write(['PART'], channel)
+part.rule = (['part'], r'(#\S+)')
 part.priority = 'low'
 part.example = '$!part #example'
 
@@ -76,6 +79,20 @@ def mesay(phenny, input):
 mesay.rule = (['mesay'], r'(#?\S+) (.+)')
 mesay.priority = 'low'
 mesay.example = '$!mesay nick/channel message'
+
+
+def kick(phenny, input):
+    if not input.admin:
+        return
+    a, b = input.group(2), input.group(3)
+    if (not a) or (not b):
+        return phenny.reply(kick.example)
+    phenny.write(['KICK', input.sender, a], b)
+    return
+kick.rule = (['kick'], r'(.+) (.+$)')
+kick.priority = 'high'
+kick.example = '$!kick pseudo reason'
+
 
 if __name__ == '__main__':
     print __doc__.strip()
